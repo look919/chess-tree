@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Analysis } from './Analysis';
 import { Chessboard, SelectedPiece } from './Chessboard';
 import { MoveNotation } from './MoveNotation';
 import { ChessPiece, initialChessPieces } from './initialChessPieces';
@@ -9,11 +10,18 @@ import { Move } from './moves/utils';
 const HomePage = () => {
   const [chessPieces, setChessPieces] = React.useState(initialChessPieces);
   const [selectedPiece, setSelectedPiece] = React.useState<SelectedPiece | null>(null);
+  const [selectedMove, setSelectedMove] = React.useState<Move | null>(null);
 
   const handleNotationClick = (move: Move) => {
+    setSelectedMove(move);
     const currentChessPieces: ChessPiece[] = JSON.parse(JSON.stringify(initialChessPieces));
 
     move.changeHistory.forEach(change => {
+      const isThereAPieceOnDesiredCell = currentChessPieces.findIndex(piece => piece.cellId === change[1]);
+      if (isThereAPieceOnDesiredCell !== -1) {
+        currentChessPieces[isThereAPieceOnDesiredCell].cellId = null;
+      }
+
       const pieceIndex = currentChessPieces.findIndex(piece => piece.cellId === change[0]);
       if (pieceIndex === -1) {
         return;
@@ -66,6 +74,7 @@ const HomePage = () => {
       updatedChessPieces[findPieceInSelectedCell].cellId = null;
     }
 
+    setSelectedMove(null);
     setChessPieces(updatedChessPieces);
     setSelectedPiece(null);
   };
@@ -73,7 +82,7 @@ const HomePage = () => {
   return (
     <main className='flex min-h-screen gap-10 p-10'>
       <MoveNotation onNotationClick={handleNotationClick} />
-
+      <Analysis selectedMove={selectedMove} />
       <Chessboard
         chessPieces={chessPieces}
         selectedPiece={selectedPiece}

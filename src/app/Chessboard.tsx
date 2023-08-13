@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import { Button } from '@/components/ui/button';
+import { SectionHeader } from './SectionHeader';
 import { ChessPiece } from './initialChessPieces';
 
 export type SelectedPiece = {
@@ -43,15 +44,15 @@ export const Chessboard = ({ chessPieces, selectedPiece, onPieceMove, onPieceSel
         priority
         src={`/images/chess-pieces/${chessPiece.color}-${chessPiece.name.toLocaleLowerCase()}.svg`}
         alt={`${chessPiece.color} ${chessPiece.name}`}
-        width='100'
-        height='100'
+        width={80}
+        height={80}
       />
     );
   };
 
   return (
-    <section className='flex w-full flex-col gap-4 text-2xl'>
-      <h1>Chessboard</h1>
+    <section className='w-[650px] flex-col gap-4 text-2xl'>
+      <SectionHeader>Chessboard</SectionHeader>
       <div className='flex w-fit flex-col-reverse border-4 border-slate-600'>
         {chessboardRows.map((row, rowIndex) => (
           <div className='relative flex items-center' key={row}>
@@ -61,7 +62,7 @@ export const Chessboard = ({ chessPieces, selectedPiece, onPieceMove, onPieceSel
                 key={cellIndex}
                 variant='default'
                 className={twMerge(
-                  'relative h-24 w-24 transition-colors duration-300',
+                  'relative h-20 w-20 p-1 transition-colors duration-300',
                   getCellColor(rowIndex, cellIndex),
                   selectedPiece?.cellId === `${cell}${row}` && 'hover: bg-sky-300 hover:bg-sky-400',
                 )}

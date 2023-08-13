@@ -2,8 +2,10 @@
 
 import React from 'react';
 import Tree from 'rc-tree';
+import { twMerge } from 'tailwind-merge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { SectionHeader } from './SectionHeader';
 import { Move, Variation, movesByVariation, variations } from './moves/utils';
 
 type MoveNotationProps = {
@@ -18,8 +20,20 @@ export const MoveNotation = ({ onNotationClick }: MoveNotationProps) => {
       <Tree.TreeNode
         key={`${move.notation}${depthCounter}`}
         title={
-          <Button onClick={() => onNotationClick(move)} className='p-0 text-base'>
-            {move.notation}
+          <Button
+            onClick={() => onNotationClick(move)}
+            className={
+              (twMerge('p-0 text-base'), move.changeHistory.length % 2 === 0 ? 'text-slate-500' : 'text-slate-200')
+            }
+          >
+            {move.isMistake ? (
+              <span>
+                {move.notation}
+                <span className='text-red-500'>!</span>
+              </span>
+            ) : (
+              move.notation
+            )}
           </Button>
         }
       >
@@ -30,7 +44,7 @@ export const MoveNotation = ({ onNotationClick }: MoveNotationProps) => {
 
   const renderTabContent = (value: Variation) => {
     return (
-      <TabsContent value={value}>
+      <TabsContent key={value} value={value}>
         <Tree showLine defaultExpandAll showIcon={false}>
           {renderMoveTree(movesByVariation[value])}
         </Tree>
@@ -39,7 +53,8 @@ export const MoveNotation = ({ onNotationClick }: MoveNotationProps) => {
   };
 
   return (
-    <section className='flex w-full flex-col text-2xl'>
+    <section className='flex w-[800px] flex-col text-2xl'>
+      <SectionHeader>Opening tree</SectionHeader>
       <Tabs defaultValue='white' className='w-[400px]'>
         <TabsList>
           {variations.map(variation => (
