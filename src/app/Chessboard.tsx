@@ -1,10 +1,21 @@
+'use client';
+
+import React from 'react';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import { Button } from '@/components/ui/button';
 import { ChessPiece } from './initialChessPieces';
 
+export type SelectedPiece = {
+  cellId: string;
+  chessPiece: ChessPiece;
+};
+
 interface ChessboardProps {
   chessPieces: ChessPiece[];
+  selectedPiece: SelectedPiece | null;
+  onPieceSelection: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onPieceMove: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const getCellColor = (rowIndex: number, cellIndex: number) => {
@@ -17,9 +28,9 @@ const getCellColor = (rowIndex: number, cellIndex: number) => {
 
 const chessboardRows = [1, 2, 3, 4, 5, 6, 7, 8];
 
-const chessboardCols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const chessboardCols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-export const Chessboard = ({ chessPieces }: ChessboardProps) => {
+export const Chessboard = ({ chessPieces, selectedPiece, onPieceMove, onPieceSelection }: ChessboardProps) => {
   const renderChessPiece = (cellId: string) => {
     const chessPiece = chessPieces.find(piece => piece.cellId === cellId);
 
@@ -49,7 +60,13 @@ export const Chessboard = ({ chessPieces }: ChessboardProps) => {
               <Button
                 key={cellIndex}
                 variant='default'
-                className={twMerge('relative h-24 w-24', getCellColor(rowIndex, cellIndex))}
+                className={twMerge(
+                  'relative h-24 w-24 transition-colors duration-300',
+                  getCellColor(rowIndex, cellIndex),
+                  selectedPiece?.cellId === `${cell}${row}` && 'hover: bg-sky-300 hover:bg-sky-400',
+                )}
+                value={`${cell}${row}`}
+                onClick={selectedPiece ? onPieceMove : onPieceSelection}
               >
                 {row === 1 && (
                   <span className='absolute bottom-0 right-1 text-xl text-red-600 text-opacity-60'>{cell}</span>

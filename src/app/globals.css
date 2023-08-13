@@ -19,10 +19,8 @@ body {
   color: white;
 }
 
-.chessboard > button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  aspect-ratio: 1;
+/* TreeStyles.css */
+.rc-tree-node-selected {
+  background-color: transparent; /* Remove background color */
+  color: inherit; /* Use the default text color */
 }

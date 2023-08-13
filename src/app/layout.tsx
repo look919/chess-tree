@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
-import './globals.css';
 import { Poppins } from 'next/font/google';
+import 'rc-tree/assets/index.css';
+import './globals.css';
 
 const font = Poppins({ subsets: ['latin-ext'], weight: ['100', '400', '700'] });
 
