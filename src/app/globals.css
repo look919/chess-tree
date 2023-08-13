@@ -18,3 +18,11 @@ body {
   background-color: black;
   color: white;
 }
+
+.chessboard > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  aspect-ratio: 1;
+}
