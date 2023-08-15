@@ -1,5 +1,5 @@
+import { Move } from '../moves/utils';
 import { SectionHeader } from './SectionHeader';
-import { Move } from './moves/utils';
 
 interface AnalysisProps {
   selectedMove: Move | null;

@@ -5,9 +5,10 @@ import { whiteMoves } from './white';
 export type ChangeNotation = [string, string];
 
 export type Move = {
-  moveNumber: number;
+  moveNumber?: number;
   notation: string;
-  changeHistory: ChangeNotation[];
+  move: ChangeNotation;
+  nodeMoves?: ChangeNotation[];
   variationName?: string;
   description?: string;
   evaluation?: string;

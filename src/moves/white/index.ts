@@ -5,17 +5,13 @@ import { queensGambit } from './queensGambit';
 import { trompowskyMoves } from './trompowsky';
 
 export const whiteMoves: Move = {
-  moveNumber: 1,
   notation: 'd4',
-  changeHistory: [['d2', 'd4']],
+  move: ['d2', 'd4'],
   children: [
     {
       moveNumber: 1,
       notation: 'd5',
-      changeHistory: [
-        ['d2', 'd4'],
-        ['d7', 'd5'],
-      ],
+      move: ['d7', 'd5'],
       children: [queensGambit],
     },
     e5SideLines,

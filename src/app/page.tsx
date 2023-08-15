@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
+import { Move } from '../moves/utils';
 import { Analysis } from './Analysis';
 import { Chessboard, SelectedPiece } from './Chessboard';
 import { MoveNotation } from './MoveNotation';
 import { ChessPiece, initialChessPieces } from './initialChessPieces';
-import { Move } from './moves/utils';
 
 const HomePage = () => {
   const [chessPieces, setChessPieces] = React.useState(initialChessPieces);
@@ -16,7 +16,7 @@ const HomePage = () => {
     setSelectedMove(move);
     const currentChessPieces: ChessPiece[] = JSON.parse(JSON.stringify(initialChessPieces));
 
-    move.changeHistory.forEach(change => {
+    move.nodeMoves?.forEach(change => {
       const isThereAPieceOnDesiredCell = currentChessPieces.findIndex(piece => piece.cellId === change[1]);
       if (isThereAPieceOnDesiredCell !== -1) {
         currentChessPieces[isThereAPieceOnDesiredCell].cellId = null;
